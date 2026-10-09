@@ -1,0 +1,100 @@
+/*
+  重要(要検証):
+  Deno.BrowserWindowのオプションに「transparent」に相当する項目が
+  現時点のドキュメント上確認できていません(frameless/alwaysOnTop/noActivateはあるが、
+  ウィンドウ自体の背景透過は未確認)。
+  下のbackground: transparentはCSS側の設定であり、これだけでデスクトップが
+  透けて見える保証はありません。実際にビルドして、背景が透明に抜けるか
+  (抜けない場合は単色の100x100ボックスとして表示されるはず)を確認してください。
+*/
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+
+.stage {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.man {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  width: 36px;
+  height: 70px;
+  transform: translateX(-50%);
+}
+.man .part {
+  position: absolute;
+  background: #222;
+  border-radius: 3px;
+  transform-origin: top center;
+}
+.head {
+  width: 16px;
+  height: 16px;
+  border: 3px solid #222;
+  border-radius: 50%;
+  background: transparent !important;
+  top: 0;
+  left: 10px;
+}
+.torso {
+  width: 4px;
+  height: 26px;
+  top: 18px;
+  left: 16px;
+}
+.arm-l, .arm-r {
+  width: 3px;
+  height: 22px;
+  top: 21px;
+}
+.arm-l { left: 12px; }
+.arm-r { left: 21px; }
+.leg-l, .leg-r {
+  width: 3px;
+  height: 26px;
+  top: 44px;
+}
+.leg-l { left: 12px; }
+.leg-r { left: 21px; }
+
+/* idle: 待機(呼吸するように揺れる)。walk/sit/dragは必要になったら前回のデモから移植してください */
+.man.idle { animation: idleBob 2.2s ease-in-out infinite; }
+.man.idle .arm-l { animation: idleArmL 2.2s ease-in-out infinite; }
+.man.idle .arm-r { animation: idleArmR 2.2s ease-in-out infinite; }
+@keyframes idleBob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-2px); }
+}
+@keyframes idleArmL {
+  0%, 100% { transform: rotate(14deg); }
+  50% { transform: rotate(10deg); }
+}
+@keyframes idleArmR {
+  0%, 100% { transform: rotate(-14deg); }
+  50% { transform: rotate(-10deg); }
+}
+
+/* public/app.css に追加 */
+.sprite {
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: calc(var(--frame-count, 1) * 100%) 100%;
+  image-rendering: pixelated; /* ドット絵なのでぼかさない */
+}
+.sprite.playing {
+  animation: spriteStep 0.8s steps(var(--frame-count)) infinite;
+}
+@keyframes spriteStep {
+  from { background-position: 0 0; }
+  to   { background-position: -100% 0; }
+}

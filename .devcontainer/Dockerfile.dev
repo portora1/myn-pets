@@ -1,0 +1,13 @@
+# .devcontainer/Dockerfile.dev
+FROM denoland/deno:debian
+
+USER root
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ruby ruby-dev build-essential && \
+    gem install asciidoctor asciidoctor-pdf asciidoctor-diagram && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN deno upgrade canary
+
+WORKDIR /workspace

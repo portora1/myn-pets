@@ -1,0 +1,12 @@
+// .devcontainer/devcontainer.json
+{
+  "name": "myn-pets-dev",
+  "build": {
+    "dockerfile": "Dockerfile.dev"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["asciidoctor.asciidoctor-vscode", "denoland.vscode-deno"]
+    }
+  }
+}

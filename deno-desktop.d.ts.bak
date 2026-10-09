@@ -1,0 +1,18 @@
+// src/types/deno-desktop.d.ts
+declare namespace Deno {
+  interface BrowserWindowOptions {
+    title?: string;
+    width?: number;
+    height?: number;
+    alwaysOnTop?: boolean;
+    frameless?: boolean;
+    noActivate?: boolean;
+    url?: string;
+  }
+
+  class BrowserWindow {
+    constructor(options?: BrowserWindowOptions);
+    close(): void;
+    executeJs(code: string): void;
+  }
+}

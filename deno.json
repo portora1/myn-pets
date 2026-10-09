@@ -1,0 +1,27 @@
+{
+  "name": "myn-pets",
+  "version": "0.1.0",
+  "imports": {
+    "@std/http": "jsr:@std/http@^1.1.4",
+    "@std/http/file-serever": "jsr:@std/http@1/file-server"
+  },
+  "tasks": {
+    "dev": "deno desktop --allow-env --allow-read --allow-write --allow-net main.ts",
+    "build": "deno desktop --allow-env --allow-read --allow-write --allow-net --all-targets main.ts"
+  },
+  "compile": {
+    "include": ["public"]
+  },
+  "desktop": {
+    "app": {
+      "name": "MYN Pets",
+      "identifier": "com.portora1.mynpets"
+    },
+    "backend": "webview",
+    "output": {
+      "macos": "./dist/MYNPets",
+      "windows": "./dist/MYNPets",
+      "linux": "./dist/myn-pets.AppImage"
+    }
+  }
+}
